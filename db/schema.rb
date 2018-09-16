@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_15_024729) do
+ActiveRecord::Schema.define(version: 2018_09_16_151830) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "click_stats", force: :cascade do |t|
+    t.text "referer_url"
+    t.bigint "url_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["url_id"], name: "index_click_stats_on_url_id"
+  end
 
   create_table "urls", force: :cascade do |t|
     t.text "long_url"

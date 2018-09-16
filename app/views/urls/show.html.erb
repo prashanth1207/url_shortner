@@ -1,0 +1,7 @@
+<p><%= flash["success"] %></p>
+<p><%= flash["notice"] %></p>
+<p><%= flash["error"] %></p>
+<% shortend_url = "#{request.host_with_port}/#{@url.short_url}" %>
+<p><%= flash[:error] %></p>
+<p>Original Url: <span><%= @url.long_url %></span></p>
+Shortened Url : <%= link_to shortend_url ,"/#{@url.short_url}" ,:target => "_blank" %>

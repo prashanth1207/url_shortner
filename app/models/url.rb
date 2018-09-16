@@ -1,13 +1,17 @@
 class Url < ApplicationRecord
   validates :long_url, presence: true
   validates :long_url, format: {with: /\A(?:(?:http|https):\/\/)?([-a-zA-Z0-9.]{2,256}\.[a-z]{2,4})\b(?:\/[-a-zA-Z0-9@,!:%_\+.~#?&\/\/=]*)?\z/,
-  :message => "Invalid url format" }
-  before_create :sanitize_url
-  before_create :generate_short_url
+  :message => "invalid url format" }
+
+  before_save :sanitize_url
+  before_save :generate_short_url
+
+  has_many :click_stats
+
   SHORT_URL_LENGTH = 5
 
   def sanitize_url
-    url = self.long_url.gsub("(http://)|(https://)|(www\.)","")
+    url = (self.long_url || "").gsub("(http://)|(https://)|(www\.)","")
     self.sanitize_url = "http://#{url}"
   end
 

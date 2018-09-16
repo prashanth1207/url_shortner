@@ -27,5 +27,10 @@ describe Url do
       expect(url).to be_valid
       expect(url.short_url.length).to be < 10
     end
+
+    it "url should have has_many click_stats" do
+      assc = described_class.reflect_on_association(:click_stats)
+      expect(assc.macro).to eq :has_many
+    end
   end
 end

@@ -23,6 +23,7 @@ class Url < ApplicationRecord
     duplicate.present?
   end
 
+  #used md5 to generate hexcode and i am getting the first 6 charecters if there is a clash with the same name already then i will take next 6 digits. also if the conflict increases more than 10 then i am rasing error 
   def generate_short_url(clash_count=0)
     raise "Too many short URL clashes. Please increase the short url length" if clash_count == 10
     url = self.sanitize_url

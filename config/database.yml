@@ -26,5 +26,7 @@ test:
   password:
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  database: url_shortner_prod
+  username: prashanth
+  password:

@@ -8,11 +8,11 @@ class UrlsController < ApplicationController
     @url = Url.new(long_url: params[:long_url])
     if @url.is_duplicate?
       @url = @url.duplicate
-      flash[:notice] = "shortend URL already exits!"
+      flash.now[:notice] = "shortend URL already exits!"
     elsif @url.save
-      flash[:success] = "url shortend successfully!"
+      flash.now[:success] = "url shortend successfully!"
     else
-      flash[:error] = @url.errors.full_messages
+      flash.now[:errors] = @url.errors.full_messages.join(" ")
       render :index
       return
     end
@@ -22,7 +22,7 @@ class UrlsController < ApplicationController
   def show
     @url = Url.find_by_id(params[:id])
     if !@url
-      flash[:error] = "Record does not exists!"
+      flash.now[:error] = "Record does not exists!"
       redirect_to action: :index
       return
     end
@@ -32,7 +32,7 @@ class UrlsController < ApplicationController
   def redirect
     url = Url.find_by_short_url(params[:short_url])
     if url.nil?
-      flash[:error] = "Sorry no URL found!"
+      flash.now[:error] = "Sorry no URL found!"
       redirect_to action: :index
       return
     end
@@ -62,7 +62,7 @@ class UrlsController < ApplicationController
       total_clicks: stats.count,
       click_stats: stats.map do |st|
                       {click_source: st.referer_url,
-                        clicked_at: st.created_at
+                        clicked_at: st.created_at.strftime('%d %b %Y %I:%M:%S %p %z')
                       }
                     end
       }

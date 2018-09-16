@@ -1,4 +1,4 @@
-<p><%= flash[:error]%></p>
+<p><%= flash[:errors] %></p>
 <%= form_tag '/create', method: :post do %>
 <%= label_tag :long_url %>:
 <%= text_field_tag :long_url,@url.long_url  %>
